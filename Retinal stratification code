@@ -1,11 +1,10 @@
-
-%%%%%%%%%%%%%% Retinal stratification %%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% Retinal stratification %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear
 clc
 close all
 %% B_scan_1022
-I=imread('data2\1.tif');
+I=imread('data2\11.tif');
 II=I;
 I=double(I);
 figure,imshow(I,[0 200]);
@@ -33,7 +32,7 @@ NoMax_G1=NoMax(Grad_1);
 figure(2),imshow(NoMax_G1,[0 10]);
 %% ILM 
 for j=1:n      
-[pks,locs] = findpeaks(NoMax_G1(:,j),'minpeakheight',5);
+[pks,locs] = findpeaks(NoMax_G1(:,j),'minpeakheight',10);
         if isempty(locs) 
             locs(1)=Temp_locs;
         end
@@ -71,8 +70,11 @@ clear OSJE Temp_A
 ONL(1)=IS(1)-7;
 for j=2:n
     [~,ONLy]=findpeaks(NoMax_G1(1:IS(j)-4,j),'minpeakheight',3);
+    if isempty(ONLy) 
+       ONLy(1)=1;
+    end
     ONL(j)=ONLy(length(ONLy));
-    if j>1 && IS(j)-ONL(j)>15
+    if j>1 && IS(j)-ONL(j)>10
         ONL(j)=ONL(j-1);
     end
 end
@@ -312,3 +314,4 @@ for j=1:n
     end
 end
 end
+
